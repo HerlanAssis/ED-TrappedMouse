@@ -12,3 +12,5 @@
 hs_err_pid*
 /TrappedMouse/nbproject/private/
 /nbproject/private/
+/build/
+/dist/
