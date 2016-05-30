@@ -10,17 +10,26 @@ public class Maze {
     private Cell entryCell;
     private MyStack<Cell> mazeStack;
     private ArrayList<String> maze;
-    private final char exitMarker = 'e';
-    private final char entryMarker = 'm';
-    private final char visited = '.';
-    private final char passege = '0';
-    private final char wall = '1';
 
-    public void exitMaze() {
+    private final char exitMarker = 'e', entryMarker = 'm', visited = '.';
+    private final char passage = '0', wall = '1';
+
+    public Maze() {
+        this.mazeStack = new MyStack<>(100);
+        this.entryCell = new Cell();
+        this.entryCell = new Cell();
     }
 
     @Override
     public String toString() {
         return super.toString();
     }
+
+    private void pushUnvisited(int row, int col) {
+
+    }
+
+    public void exitMaze() {
+
+    }        
 }
