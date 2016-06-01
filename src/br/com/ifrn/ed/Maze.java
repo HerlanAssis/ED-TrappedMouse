@@ -2,15 +2,17 @@ package br.com.ifrn.ed;
 
 import br.com.ifrn.ed.Stack.MyStack;
 import br.com.ifrn.ed.Stack.StackException;
+import br.com.ifrn.ed.gui.TrappedMouse;
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
 
 public class Maze {
-
-    private int rows = 0, cols = 0;
+    TrappedMouse tp;
+    private int rows = 0, cols = 0;//linhas e colunas do labirinto
     private Cell currentCell, exitCell, entryCell;
     private MyStack<String> mazeRows;
+    private MyStack<Cell> mazeStack;
     private ArrayList<String> maze;
 
     private final char exitMarker = 'e', entryMarker = 'm', visited = '.';
@@ -118,37 +120,78 @@ public class Maze {
     @Override
     public String toString() {
         String msg = "";
+        String lab = "";
+        
         for (String arrayMaze : maze) {
             msg += arrayMaze + "\n";
+            lab += arrayMaze;
         }
+        
+        tp.mountMaze(lab);
         return msg;
     }
 
-    public void exitMaze() {
-        this.currentCell = this.entryCell;
-        while (!currentCell.equals(exitCell)) {
-            if (isVisited(currentCell.getX(), currentCell.getY())) {
-
-            } else {
-
-            }
-        }
+    private boolean isVisited(int row, int col) {
+        String marcado = maze.get(row);
+        char[] toCharArray = marcado.toCharArray();
+        Character pont = toCharArray[col];
+        return pont.equals(visited);
     }
 
-    private boolean isVisited(int row, int col) {
-        boolean marked = false;
+    private void marked(int row, int col) {
         String marcado = maze.get(row);
         char[] toCharArray = marcado.toCharArray();
         Character pont = toCharArray[col];
 
-        if (pont.equals(passage)) {
-            toCharArray[col] = visited;
+        if (pont.equals(passage) || pont.equals(entryMarker)) {
+            if (!pont.equals(entryMarker)) {
+                toCharArray[col] = visited;
+            }
             marcado = new String(toCharArray);
             maze.set(currentCell.getX(), marcado);
-        } else {
-            marked = true;
         }
+    }
 
-        return marked;
+    public void pushUnvisited(int row, int col) {
+        String str = maze.get(row);
+        char[] toCharArray = str.toCharArray();
+        Character pont = toCharArray[col];
+
+        if (pont.equals(passage) || pont.equals(exitMarker)) {
+            try {
+                mazeStack.push(new Cell(row, col));
+            } catch (StackException ex) {
+            }
+        }
+    }
+
+    public void exitMaze() {       
+        tp = new TrappedMouse(rows, cols);
+        tp.setVisible(true);
+        mazeStack = new MyStack<>(100);
+        currentCell = entryCell;        
+        System.out.println(toString());
+        while (!currentCell.equals(exitCell)) {
+            int row = currentCell.getX(), col = currentCell.getY();
+            if (!isVisited(row, col)) {
+                marked(row, col);
+                pushUnvisited(row + 1, col);//BAIXO
+                pushUnvisited(row - 1, col);//CIMA
+                pushUnvisited(row, col - 1);//ESQ         
+                pushUnvisited(row, col + 1);//DIR                           
+            } else if (mazeStack.isEmpty()) {
+                System.out.println("Falha em sair do labirinto");
+                break;
+            }
+
+            try {
+                currentCell = (Cell) mazeStack.pop();
+            } catch (StackException ex) {
+            }            
+            System.out.println(toString());
+        }
+        if (currentCell.equals(exitCell)) {
+            System.out.println("ESCAPEI DESSA PORRA!");
+        }
     }
 }
