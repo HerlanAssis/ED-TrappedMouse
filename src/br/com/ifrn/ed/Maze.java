@@ -25,35 +25,32 @@ public class Maze {
     private Scanner optionScanner;
     private int option;
 
-    public Maze() throws IOException, FileNotFoundException, StackException {
-        this.mazeRows = new MyStack<>(100);
-        this.entryCell = new Cell();
-        this.entryCell = new Cell();
+    public Maze() {
+        mazeRows = new MyStack<>(100);
+        entryCell = new Cell();
+        exitCell = new Cell();
         maze = new ArrayList<>();
-        this.optionScanner = new Scanner(System.in);
+        optionScanner = new Scanner(System.in);
 
         do {
             System.out.println("Selecione a entrada para o labirinto:"
-                    + "\n1 - Teclado\n2 - arquivo");
+                    + "\n0 - Teclado\n1 - arquivo");
             option = optionScanner.nextInt();
-        } while (option != 1 && option != 2);
+        } while (option != 0 && option != 1);
 
-        switch (option) {
-            case 1:
-                Input(true);
-                break;
-            case 2:
-                Input(false);
-                break;
-        }
+        Input(option);
     }
 
-    private void Input(boolean keyboardInput) throws FileNotFoundException, IOException, StackException {
+    private void Input(int Input) {
         String str = null;
 
-        fis = new FileInputStream(this.fileMazeName);
+        try {
+            fis = new FileInputStream(this.fileMazeName);
+        } catch (FileNotFoundException ex) {
+            System.out.println("Arquivo não encontrado!");
+        }
 
-        if (keyboardInput) {
+        if (Input == 0) {
             isr = new InputStreamReader(System.in);
             System.out.println("Digite um labirinto retangular utilizando os seguintes comandos: "
                     + "\nm - entrada\ne - saida\n1 - parede\n0 - passagem\n "
@@ -78,6 +75,7 @@ public class Maze {
             }
             maze.add(lineWall(cols)); //acrescenta a parede ao topo do labirinto
             rows++;
+
             MyStack<String> mazeRowsAux = new MyStack<>(100);//pilha auxiliar para inverter o labirinto
 
             while (!mazeRows.isEmpty()) {
@@ -89,42 +87,68 @@ public class Maze {
 
             maze.add(lineWall(cols)); //acrescenta a parede ao final do labirinto
             rows++;
-        } catch (EOFException eOFException) {
-        }       
+
+        } catch (IOException ex) {
+            System.out.println("Erro de leitura do arquivo!");
+        } catch (StackException ex) {
+            System.out.println("Erro na pilha!");
+        }
     }
 
     private String lineWall(int tam) {
         String walls = "";
-
         for (int i = 0; i < tam; i++) {
-            walls += this.wall;
+            walls += wall;
         }
-
         return walls;
     }
 
     private void searchEntryAndExitCell(String str) {
         //A função indexOf pesquisa em um array de char
         if (str.indexOf(exitMarker) != -1) {
-            this.exitCell.setX(rows);
-            this.exitCell.setY(str.indexOf(exitMarker));
+            exitCell.setX(rows);
+            exitCell.setY(str.indexOf(exitMarker));
         }
         if (str.indexOf(entryMarker) != -1) {
-            this.entryCell.setX(rows);
-            this.entryCell.setY(str.indexOf(entryMarker));
+            entryCell.setX(rows);
+            entryCell.setY(str.indexOf(entryMarker));
         }
     }
 
     @Override
     public String toString() {
-        return super.toString();
-    }
-
-    private void pushUnvisited(int row, int col) {
-
+        String msg = "";
+        for (String arrayMaze : maze) {
+            msg += arrayMaze + "\n";
+        }
+        return msg;
     }
 
     public void exitMaze() {
+        this.currentCell = this.entryCell;
+        while (!currentCell.equals(exitCell)) {
+            if (isVisited(currentCell.getX(), currentCell.getY())) {
 
+            } else {
+
+            }
+        }
+    }
+
+    private boolean isVisited(int row, int col) {
+        boolean marked = false;
+        String marcado = maze.get(row);
+        char[] toCharArray = marcado.toCharArray();
+        Character pont = toCharArray[col];
+
+        if (pont.equals(passage)) {
+            toCharArray[col] = visited;
+            marcado = new String(toCharArray);
+            maze.set(currentCell.getX(), marcado);
+        } else {
+            marked = true;
+        }
+
+        return marked;
     }
 }
