@@ -140,12 +140,13 @@ public class Maze {
     
     private void mountMaze(int r, int c){
         String lab = "";
-        
-        int mousePosition = (r*cols)+(c);                
+
+        int mousePosition = (r*7)+(c);                
         
         for (String arrayMaze : maze) {            
             lab += arrayMaze;
-        }        
+        }
+        //System.out.println(mousePosition);
         tp.mountMaze(lab, mousePosition);
     }
 
