@@ -119,17 +119,23 @@ public class Maze {
 
     @Override
     public String toString() {
-        String msg = "";
-        String lab = "";
+        String msg = "";        
         
         for (String arrayMaze : maze) {
-            msg += arrayMaze + "\n";
-            lab += arrayMaze;
-        }
-        int mouse = currentCell.getX() * currentCell.getY();
-        System.out.println("MOUSE" + mouse);
-        tp.mountMaze(lab, mouse);
+            msg += arrayMaze + "\n";            
+        }                
+        
         return msg;
+    }
+    
+    private void mountMaze(int r, int c){
+        String lab = "";
+        int mousePosition = (r*7)+(c);                
+        
+        for (String arrayMaze : maze) {            
+            lab += arrayMaze;
+        }        
+        tp.mountMaze(lab, mousePosition);
     }
 
     private boolean isVisited(int row, int col) {
@@ -190,9 +196,12 @@ public class Maze {
             } catch (StackException ex) {
             }            
             System.out.println(toString());
+            mountMaze(row, col);
         }
         if (currentCell.equals(exitCell)) {
             System.out.println("ESCAPEI DESSA PORRA!");
+            int row = currentCell.getX(), col = currentCell.getY();
+            mountMaze(row, col);
         }
     }
 }
