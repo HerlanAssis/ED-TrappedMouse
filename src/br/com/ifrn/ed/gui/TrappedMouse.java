@@ -8,6 +8,7 @@ package br.com.ifrn.ed.gui;
 import java.awt.GridLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
@@ -19,7 +20,13 @@ public class TrappedMouse extends javax.swing.JFrame {
     private JLabel[] lab;
     private final char exitMarker = 'e', entryMarker = 'm', visited = '.';
     private final char passage = '0', wall = '1';
-
+    private String sWall = "/br/com/ifrn/ed/gui/Wall.png";
+    private String sPassage = "/br/com/ifrn/ed/gui/Passage.png";
+    private String sCheese = "/br/com/ifrn/ed/gui/Cheese.png";
+    private String sVisited = "/br/com/ifrn/ed/gui/Visited.png";
+    private String sEntry = "/br/com/ifrn/ed/gui/House.png";
+    private String sMouse = "/br/com/ifrn/ed/gui/Mouse.png";
+    private ImageIcon iconWall, iconPassage, iconCheese, iconVisited, IconEntry, iconMouse;
     int tam = 0;
 
     /**
@@ -35,18 +42,42 @@ public class TrappedMouse extends javax.swing.JFrame {
         lab = new JLabel[tam];
         PainelLabirinto.setLayout(grid);
 
+        IconEntry = new ImageIcon(sEntry);
+        iconCheese = new ImageIcon(sCheese);
+        iconMouse = new ImageIcon(sMouse);
+        iconPassage = new ImageIcon(sPassage);
+        iconVisited = new ImageIcon(sVisited);
+        iconWall = new ImageIcon(sWall);
+
         for (int i = 0; i < tam; i++) {
             lab[i] = new JLabel();
+            PainelLabirinto.add(lab[i]);
         }
     }
 
     public void mountMaze(String maze) {
-        char[] mazeCharArray = maze.toCharArray();
-
+        char[] mazeCharArray = maze.toCharArray();        
         for (int i = 0; i < tam; i++) {
             Character mazePoint = mazeCharArray[i];
-            lab[i].setText(mazePoint.toString());
-            PainelLabirinto.add(lab[i]);
+
+            switch (mazePoint) {
+                case wall:
+                    lab[i].setIcon(iconWall);
+                    break;
+                case visited:
+                    lab[i].setIcon(iconVisited);
+                    break;
+                case passage:
+                    lab[i].setIcon(iconPassage);
+                    break;
+                case entryMarker:
+                    lab[i].setIcon(IconEntry);
+                    break;
+                case exitMarker:
+                    lab[i].setIcon(iconCheese);
+                    break;
+            }
+            //lab[i].setText(null);
         }
 
         try {
@@ -65,9 +96,21 @@ public class TrappedMouse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         PainelFundo = new javax.swing.JPanel();
         PainelLabirinto = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -75,7 +118,7 @@ public class TrappedMouse extends javax.swing.JFrame {
         PainelFundo.setBackground(java.awt.Color.white);
 
         PainelLabirinto.setBackground(java.awt.Color.white);
-        PainelLabirinto.setLayout(new java.awt.GridLayout());
+        PainelLabirinto.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 48)); // NOI18N
         jLabel1.setText("Trapped Mouse");
@@ -85,22 +128,21 @@ public class TrappedMouse extends javax.swing.JFrame {
         PainelFundoLayout.setHorizontalGroup(
             PainelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PainelFundoLayout.createSequentialGroup()
-                .addGroup(PainelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PainelFundoLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel1))
-                    .addGroup(PainelFundoLayout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(PainelLabirinto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addGap(121, 121, 121)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelFundoLayout.createSequentialGroup()
+                .addContainerGap(73, Short.MAX_VALUE)
+                .addComponent(PainelLabirinto, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
         );
         PainelFundoLayout.setVerticalGroup(
             PainelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelFundoLayout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addComponent(PainelLabirinto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(PainelLabirinto, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         getContentPane().add(PainelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 520, 340));
@@ -112,5 +154,6 @@ public class TrappedMouse extends javax.swing.JFrame {
     private javax.swing.JPanel PainelFundo;
     private javax.swing.JPanel PainelLabirinto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
 }
