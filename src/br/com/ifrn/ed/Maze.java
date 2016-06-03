@@ -38,7 +38,7 @@ public class Maze {
     private int option;
 
     public Maze() {
-        mazeRows = new MyStack<>(100);
+        mazeRows = new MyStack<>(1000);
         entryCell = new Cell();
         exitCell = new Cell();
         maze = new ArrayList<>();
@@ -88,7 +88,7 @@ public class Maze {
             maze.add(lineWall(cols)); //acrescenta a parede ao topo do labirinto
             rows++;
 
-            MyStack<String> mazeRowsAux = new MyStack<>(100);//pilha auxiliar para inverter o labirinto
+            MyStack<String> mazeRowsAux = new MyStack<>(1000);//pilha auxiliar para inverter o labirinto
 
             while (!mazeRows.isEmpty()) {
                 mazeRowsAux.push((String) mazeRows.pop());//Realizar pops na pilha adicionando em maze
@@ -187,7 +187,7 @@ public class Maze {
     public void exitMaze() {       
         tp = new TrappedMouse(rows, cols);
         tp.setVisible(true);
-        mazeStack = new MyStack<>(100);
+        mazeStack = new MyStack<>(1000);
         currentCell = entryCell;        
         System.out.println(toString());
         while (!currentCell.equals(exitCell)) {

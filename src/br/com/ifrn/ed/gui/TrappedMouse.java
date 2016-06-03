@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,6 +48,13 @@ public class TrappedMouse extends javax.swing.JFrame {
         iconPassage = new ImageIcon(getClass().getResource(sPassage));
         iconVisited = new ImageIcon(getClass().getResource(sVisited));
         iconWall = new ImageIcon(getClass().getResource(sWall));
+        
+        resizeImg(IconEntry);
+        resizeImg(iconCheese);
+        resizeImg(iconMouse);
+        resizeImg(iconPassage);
+        resizeImg(iconVisited);
+        resizeImg(iconWall);
 
         for (int i = 0; i < tam; i++) {
             lab[i] = new JLabel();
@@ -84,11 +90,16 @@ public class TrappedMouse extends javax.swing.JFrame {
         }
         
         try {
-            Thread.sleep(1000);
+            Thread.sleep(450);
         } catch (InterruptedException ex) {
             Logger.getLogger(TrappedMouse.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+    public void resizeImg(ImageIcon imageIcon){
+        final int ALTURA = 20, LARGURA = 20;
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(LARGURA, ALTURA, 100));
     }
 
     /**
