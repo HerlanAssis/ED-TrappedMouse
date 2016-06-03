@@ -126,8 +126,9 @@ public class Maze {
             msg += arrayMaze + "\n";
             lab += arrayMaze;
         }
-        
-        tp.mountMaze(lab);
+        int mouse = currentCell.getX() * currentCell.getY();
+        System.out.println("MOUSE" + mouse);
+        tp.mountMaze(lab, mouse);
         return msg;
     }
 

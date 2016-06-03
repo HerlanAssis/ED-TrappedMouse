@@ -42,12 +42,12 @@ public class TrappedMouse extends javax.swing.JFrame {
         lab = new JLabel[tam];
         PainelLabirinto.setLayout(grid);
 
-        IconEntry = new ImageIcon(sEntry);
-        iconCheese = new ImageIcon(sCheese);
-        iconMouse = new ImageIcon(sMouse);
-        iconPassage = new ImageIcon(sPassage);
-        iconVisited = new ImageIcon(sVisited);
-        iconWall = new ImageIcon(sWall);
+        IconEntry = new ImageIcon(getClass().getResource(sEntry));
+        iconCheese = new ImageIcon(getClass().getResource(sCheese));
+        iconMouse = new ImageIcon(getClass().getResource(sMouse));
+        iconPassage = new ImageIcon(getClass().getResource(sPassage));
+        iconVisited = new ImageIcon(getClass().getResource(sVisited));
+        iconWall = new ImageIcon(getClass().getResource(sWall));
 
         for (int i = 0; i < tam; i++) {
             lab[i] = new JLabel();
@@ -55,27 +55,30 @@ public class TrappedMouse extends javax.swing.JFrame {
         }
     }
 
-    public void mountMaze(String maze) {
-        char[] mazeCharArray = maze.toCharArray();        
+    public void mountMaze(String maze, int mouse) {
+        char[] mazeCharArray = maze.toCharArray();
         for (int i = 0; i < tam; i++) {
             Character mazePoint = mazeCharArray[i];
-
-            switch (mazePoint) {
-                case wall:
-                    lab[i].setIcon(iconWall);
-                    break;
-                case visited:
-                    lab[i].setIcon(iconVisited);
-                    break;
-                case passage:
-                    lab[i].setIcon(iconPassage);
-                    break;
-                case entryMarker:
-                    lab[i].setIcon(IconEntry);
-                    break;
-                case exitMarker:
-                    lab[i].setIcon(iconCheese);
-                    break;
+            if (i == mouse) {
+                lab[i].setIcon(iconMouse);
+            } else {
+                switch (mazePoint) {
+                    case wall:
+                        lab[i].setIcon(iconWall);
+                        break;
+                    case visited:
+                        lab[i].setIcon(iconVisited);
+                        break;
+                    case passage:
+                        lab[i].setIcon(iconPassage);
+                        break;
+                    case entryMarker:
+                        lab[i].setIcon(IconEntry);
+                        break;
+                    case exitMarker:
+                        lab[i].setIcon(iconCheese);
+                        break;
+                }
             }
             //lab[i].setText(null);
         }
@@ -99,7 +102,6 @@ public class TrappedMouse extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         PainelFundo = new javax.swing.JPanel();
         PainelLabirinto = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -113,39 +115,34 @@ public class TrappedMouse extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1024, 768));
+        setPreferredSize(new java.awt.Dimension(1024, 768));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PainelFundo.setBackground(java.awt.Color.white);
+        PainelFundo.setMinimumSize(new java.awt.Dimension(1024, 768));
 
         PainelLabirinto.setBackground(java.awt.Color.white);
+        PainelLabirinto.setMinimumSize(new java.awt.Dimension(1024, 768));
         PainelLabirinto.setLayout(new java.awt.GridLayout(1, 0));
-
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 48)); // NOI18N
-        jLabel1.setText("Trapped Mouse");
 
         javax.swing.GroupLayout PainelFundoLayout = new javax.swing.GroupLayout(PainelFundo);
         PainelFundo.setLayout(PainelFundoLayout);
         PainelFundoLayout.setHorizontalGroup(
             PainelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PainelFundoLayout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelFundoLayout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
-                .addComponent(PainelLabirinto, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PainelLabirinto, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(476, 476, 476))
         );
         PainelFundoLayout.setVerticalGroup(
             PainelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelFundoLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(PainelLabirinto, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addComponent(PainelLabirinto, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        getContentPane().add(PainelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 520, 340));
+        getContentPane().add(PainelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 1024, 768));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -153,7 +150,6 @@ public class TrappedMouse extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PainelFundo;
     private javax.swing.JPanel PainelLabirinto;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
 }
