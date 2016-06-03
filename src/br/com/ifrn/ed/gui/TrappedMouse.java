@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -80,14 +81,14 @@ public class TrappedMouse extends javax.swing.JFrame {
                         break;
                 }
             }
-            //lab[i].setText(null);
         }
-
+        
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(TrappedMouse.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     /**
@@ -115,8 +116,8 @@ public class TrappedMouse extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Trapped Mouse");
         setMinimumSize(new java.awt.Dimension(1024, 768));
-        setPreferredSize(new java.awt.Dimension(1024, 768));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PainelFundo.setBackground(java.awt.Color.white);

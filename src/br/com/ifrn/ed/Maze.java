@@ -3,9 +3,13 @@ package br.com.ifrn.ed;
 import br.com.ifrn.ed.Stack.MyStack;
 import br.com.ifrn.ed.Stack.StackException;
 import br.com.ifrn.ed.gui.TrappedMouse;
+import static com.sun.javafx.tk.Toolkit.getToolkit;
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Maze {
     TrappedMouse tp;
@@ -15,6 +19,12 @@ public class Maze {
     private MyStack<Cell> mazeStack;
     private ArrayList<String> maze;
 
+    private String sucesso = "/br/com/ifrn/ed/gui/Sucess.jpg";
+    private ImageIcon iconSucess= new ImageIcon(getClass().getResource(sucesso));
+
+    private String gameOver = "/br/com/ifrn/ed/gui/GameOver.png";
+    private ImageIcon iconGameOver= new ImageIcon(getClass().getResource(gameOver));
+    
     private final char exitMarker = 'e', entryMarker = 'm', visited = '.';
     private final char passage = '0', wall = '1';
 
@@ -130,7 +140,8 @@ public class Maze {
     
     private void mountMaze(int r, int c){
         String lab = "";
-        int mousePosition = (r*7)+(c);                
+        
+        int mousePosition = (r*cols)+(c);                
         
         for (String arrayMaze : maze) {            
             lab += arrayMaze;
@@ -188,6 +199,7 @@ public class Maze {
                 pushUnvisited(row, col + 1);//DIR                           
             } else if (mazeStack.isEmpty()) {
                 System.out.println("Falha em sair do labirinto");
+                JOptionPane.showMessageDialog(null, "Especial Mouse está com fome!", "Game Over!", JOptionPane.PLAIN_MESSAGE, iconGameOver);
                 break;
             }
 
@@ -198,10 +210,13 @@ public class Maze {
             System.out.println(toString());
             mountMaze(row, col);
         }
+        
         if (currentCell.equals(exitCell)) {
-            System.out.println("ESCAPEI DESSA PORRA!");
+            System.out.println("O rato está de barriga cheia!");
             int row = currentCell.getX(), col = currentCell.getY();
             mountMaze(row, col);
+            JOptionPane.showMessageDialog(null, "Especial Mouse encontrou o queijo!", "Sucesso!", JOptionPane.PLAIN_MESSAGE, iconSucess);
+
         }
     }
 }
